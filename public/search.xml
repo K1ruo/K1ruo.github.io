@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[hackbar破解]]></title>
+    <url>%2F2019%2F09%2F19%2Fhackbar%E7%A0%B4%E8%A7%A3%2F</url>
+    <content type="text"><![CDATA[hackbar插件的破解&#160;&#160; &#160; &#160;hackbar作为web安全爱好者常用的必备工具之一，集合这场用的各种小功能，但新版的hackbar却已经成为付费激活的插件，而其余复刻hackbar的插件用起来用很不舒服，所以在这里带来了火狐，谷歌两个浏览器hackbar插件的免费使用方式。 火狐浏览器的方法&#160; &#160;首先火狐插件商店里面可以搜到hackbar的复刻版max hackbar，可以直接使用。&#160; &#160;另一种方法就是使用之前并没有收费的版本，并关闭掉自动更新即可。&#160; &#160;在这里举例2.1.3版本的安装，github地址：https://github.com/Mr-xn/hackbar2.1.3 直接按照步骤安装即可，同时关闭掉自动更新。 谷歌浏览器的方法&#160; &#160;谷歌浏览器的hackbar可直接进行破解，在安装插件完成后，找到插件的安装位置，以mac举例，安装位置在user/xxx/library/Application Support/Google/Chrome/Default/Extensions win自行百度或者直接文件搜索即可。进入拓展文件夹后，自行判断哪个是hackbar安装文件，（可通过判断插件id或者观察文件图片分别），在安装文件夹js里面找到hackbar-panel.js文件，将此处的false改成true。 &#160; &#160;在修改代码后，会提示插件损坏无法正常使用。然后我们需要重新打包程序，然后再离线安装即可。&#160; &#160;步骤如下：首先打开插件界面，然后打开开发这模式，点击打包拓展程序。打包完成后在插件的根目录即可找到生成的crx后缀文件。然后我们需要将此文件后缀修改为rar，全部解压成文件夹。在浏览器拓展程序位置打开开发者模式，然后再点击加载，选择刚刚解压出的文件夹即可。]]></content>
+      <categories>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>破解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[sudo误配提权]]></title>
+    <url>%2F2019%2F09%2F18%2Fsudo%E8%AF%AF%E9%85%8D%E6%8F%90%E6%9D%83%2F</url>
+    <content type="text"><![CDATA[linux提权之sudo误配提权&#160; &#160; &#160; &#160;此文章思路来自于freebuf，可直接搜索【全程带阻：记一次授权网络攻防演练】查看 &#160; &#160; &#160; &#160;Linux提权方式有很多，例如利用内核栈溢出提权、搜寻配置文件中的明文密码、环境变量劫持高权限程序、不安全的服务、借助权能（POSIX capabilities）提权、sudo 误配、SUID 滥用等等。 &#160; &#160; &#160; &#160;今天举例sudo误配提权，此提权方式网上存在靶机JIS-CTF-VulnUpload-CTF01，sudo误配提权的一种方式为：查看 home​/ 目录是否 存在.sudo_as_admin_successful 文件，若有则可以输入当前低权账号的密码直接 sudo su 切换为 root 用户。而低权限用户的账户密码的获取可通过翻找各类配置文件获得（简易获得方式）。]]></content>
+      <categories>
+        <category>Linux提权</category>
+      </categories>
+      <tags>
+        <tag>提权</tag>
+      </tags>
+  </entry>
+</search>
