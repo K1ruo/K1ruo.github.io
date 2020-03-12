@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Python爬虫笔记(③)]]></title>
+    <url>%2F2020%2F03%2F12%2Fpython%E7%88%AC%E8%99%AB(%E2%91%A2)%2F</url>
+    <content type="text"><![CDATA[信息的处理与爬虫实例##信息的标记方法示例 处理示例：步骤：搜索标签，提取标签中的对应数据（tag处理和字典处理方法相同）tag.get(‘key’)bs对象的find_all方法(name,attrs,recursive,string,**kwargs) name 标签名检索字符串，字符或列表 attrs：标签属性值的检索，find_all(‘p’,’course’)检索 p标签，或不设置标签 recursive: 是否对子孙全部检索，默认为true string ：检索字符串.find_all()==() 爬虫实例：中国大学排名步骤：①.获得排名网络内容。②.提取过滤内容。③输出结果 12345678910111213141516171819202122232425262728293031323334import requestsfrom bs4 import BeautifulSoupimport bs4def gethtml(url): #获得网页内容 try: r=requests.get(url) r.raise_for_status r.encoding=r.apparent_encoding#转换编码 return r.text except: print(&apos;error&apos;)def fill(ulist,html): #处理网页内容 soup=BeautifulSoup(html,&apos;html.parser&apos;) for tr in soup.find(&apos;tbody&apos;).children: if isinstance(tr,bs4.element.Tag):#存在非tag标签，过滤非tag标签 tds=tr(&apos;td&apos;) ulist.append([tds[0].string,tds[1].string,tds[2].string,tds[3].string])def printinfo(ulist,num):#处理输出格式 mask=&apos;&#123;0:^10&#125;\t&#123;1:&#123;4&#125;^10&#125;\t&#123;2:^10&#125;\t&#123;3:^10&#125;&apos; print(mask.format(&apos;排名&apos;,&apos;名称&apos;,&apos;位置&apos;,&apos;分数&apos;,chr(12288))) for i in range(num): u=ulist[i] print(mask.format(u[0],u[1],u[2],u[3],chr(12288))) def main(): uinfo=[] url=&apos;http://www.zuihaodaxue.com/Greater_China_Ranking2019_0.html&apos; html=gethtml(url) fill(uinfo,html) printinfo(uinfo,20)if __name__==&apos;__main__&apos;: main()]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python爬虫笔记(②)]]></title>
     <url>%2F2020%2F03%2F12%2Fpython%E7%88%AC%E8%99%AB(%E2%91%A1)%2F</url>
     <content type="text"><![CDATA[网站图片爬取示例1234567891011121314151617import requestsimport osurl=&apos;http://www.example.com/200001021.jpg&apos;root=&apos;d:/pics&apos; #设置文件存储位置path=root+url.split(&apos;/&apos;)[-1] #取图片名称try: if not os.path.exists(root): os.mkdir(root) if not os.path.exists(path): r=requests.get(url) with open(path,&apos;wb&apos;) as f: #二进制保存 f.write(r.content) print(&apos;ok&apos;) else: print(&apos;already exist&apos;)except: print(&apos;error&apos;) Beautifulsoup模块beautifulsoup模块使用： 12from bs4 importBeautifulSoupsoup = BeautifulSoup(&apos;&lt;p&gt;data&lt;/p&gt;&apos;,&apos;html.parser&apos;) 库解析器html.parserlxmlxmlhtml5lib tag标签 soup.,默认返回第一个tag name tag的名字，通过.name获取，字符串类型 attrs 标签的属性，字典形式组织，.attrs，举例，将标签元素拆解成字典 string 返回&lt;&gt;&lt;/&gt;中的字符串，格式：.string comment 返回标签内字符串的注释部分 ，中的内容，格式：.comment 遍历方式 下行遍历： .contents,子节点的列表，把所有的儿子节点放入列表.children ，子节点的迭代类型，遍历儿子节点.descendants，子孙节点的迭代类型，循环遍历子孙节点 1234for child in soup.body.children: #遍历儿子节点 print(child)for child in soup.body.descendants:#遍历子孙节点 print(child) 上行遍历.parents 节点的父标签.parents 节点的父标签的迭代类型 平行遍历 prettify()方法，将返回的内容添加’换行‘，显示更美观]]></content>
