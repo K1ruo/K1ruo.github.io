@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>SQL笔记 | NOTALIVE</title><meta name="description" content="SQL笔记"><meta name="keywords" content="SQL"><meta name="author" content="神樂"><meta name="copyright" content="神樂"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="canonical" href="https://K2gura.github.io/2020/03/18/数据库 SQL/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="SQL笔记"><meta name="twitter:description" content="SQL笔记"><meta name="twitter:image" content="https://K2gura.github.io/img/sql/sql.jpg"><meta property="og:type" content="article"><meta property="og:title" content="SQL笔记"><meta property="og:url" content="https://K2gura.github.io/2020/03/18/数据库 SQL/"><meta property="og:site_name" content="NOTALIVE"><meta property="og:description" content="SQL笔记"><meta property="og:image" content="https://K2gura.github.io/img/sql/sql.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="next" title="Python爬虫笔记(⑤)" href="https://K2gura.github.io/2020/03/13/python爬虫(⑤)/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"./public/search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight_copy: 'true',
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: '添加书签',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天'
+
+  
+}</script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL语言"><span class="toc-number">1.</span> <span class="toc-text">SQL语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL数据定义功能"><span class="toc-number">2.</span> <span class="toc-text">SQL数据定义功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模式"><span class="toc-number">2.1.</span> <span class="toc-text">模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#表"><span class="toc-number">2.2.</span> <span class="toc-text">表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL查询"><span class="toc-number">3.</span> <span class="toc-text">SQL查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#属性列查询"><span class="toc-number">3.1.</span> <span class="toc-text">属性列查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元组查询"><span class="toc-number">3.2.</span> <span class="toc-text">元组查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多关系查询，集合操作"><span class="toc-number">3.3.</span> <span class="toc-text">多关系查询，集合操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多关系查询，连接操作"><span class="toc-number">3.4.</span> <span class="toc-text">多关系查询，连接操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQL嵌套查询"><span class="toc-number">3.5.</span> <span class="toc-text">SQL嵌套查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SQL分组聚集"><span class="toc-number">3.6.</span> <span class="toc-text">SQL分组聚集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于派生表的查询"><span class="toc-number">3.7.</span> <span class="toc-text">基于派生表的查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据操作"><span class="toc-number">4.</span> <span class="toc-text">数据操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL视图"><span class="toc-number">5.</span> <span class="toc-text">SQL视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL的索引"><span class="toc-number">6.</span> <span class="toc-text">SQL的索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL数据库完整性"><span class="toc-number">7.</span> <span class="toc-text">SQL数据库完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参照完整性"><span class="toc-number">7.1.</span> <span class="toc-text">参照完整性</span></a></li></ol></li></ol></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/sql/top.jpg)"><div id="page-header"><span class="pull-left"> <a class="blog_title" id="site-name" href="/">NOTALIVE</a></span><div class="open toggle-menu pull-right"><div class="menu-icon-first"></div><div class="menu-icon-second"></div><div class="menu-icon-third"></div></div><span class="pull-right menus"><div class="mobile_author_icon"><img class="lozad" src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'"><div class="mobile_author-info__description"></div></div><hr><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首頁</span></a><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 時間軸</span></a><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 標籤</span></a><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分類</span></a><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音樂</span></a><a class="site-page" href="/picture/"><i class="fa-fw fa fa-photo"></i><span> 圖片</span></a><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友鏈</span></a><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 關於</span></a><script>document.body.addEventListener('touchstart', function(){ });</script></div></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title"><div class="posttitle">SQL笔记</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-03-18<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-03-18</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/笔记/">笔记</a></span></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><p>数据库 SQL</p>
+<h3 id="SQL语言"><a href="#SQL语言" class="headerlink" title="SQL语言"></a>SQL语言</h3><ul>
+<li>DDL（数据定义语言）create，alter，drop 。操作对象：关系表、视图，索引等</li>
+<li>DML (数据操作语言)  select，insert，update，delete。操作对象：表</li>
+<li>DCL (数据控制语言)  grant,remove(授权或回收权限)</li>
+<li>TPL  (事务处理语言) begin,transaction,commit,rollback</li>
+</ul>
+<p>外模式：视图+一些基本表<br>模式：基本表<br>内模式：存储文件</p>
+<h3 id="SQL数据定义功能"><a href="#SQL数据定义功能" class="headerlink" title="SQL数据定义功能"></a>SQL数据定义功能</h3><h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><p>CREATE SCHEMA(TABLE,VIEW,INDEX)<br>DROP<br>ALTER TABLE(INDEX)</p>
+<ul>
+<li><p>create schema&lt;模式&gt;authorization&lt;用户&gt;<br>若不指明模式则隐含为用户名与模式相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create schema test authorization zhang</span><br><span class="line">	create table tab1(a1 int,a2 char(10),a3 char(20))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>drop schema&lt;模式&gt; &lt;cascade|restrict&gt;(级联删除|限制（默认))</p>
+</li>
+</ul>
+<h4 id="表"><a href="#表" class="headerlink" title="表"></a>表</h4><ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table student(</span><br><span class="line">   sno char(11),</span><br><span class="line">   sname char(20),</span><br><span class="line">   sage int,</span><br><span class="line">   primary key(sno),</span><br><span class="line">   foreign key (sname) references course(cname))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>alter table &lt;表&gt; add &lt;列名&gt;&lt;数据类型&gt;[约束}]</p>
+</li>
+<li><p>drop</p>
+</li>
+<li><p>alter table &lt;表&gt; alter column &lt;列名&gt;&lt;数据类型&gt;</p>
+</li>
+<li><p>drop tabel &lt;表&gt; [restrict|cascade]</p>
+</li>
+</ul>
+<h3 id="SQL查询"><a href="#SQL查询" class="headerlink" title="SQL查询"></a>SQL查询</h3><p>select  from where group by (order by)</p>
+<ul>
+<li>select 投影运算</li>
+<li>from 对应关系的笛卡尔积</li>
+<li>选择情况</li>
+</ul>
+<h4 id="属性列查询"><a href="#属性列查询" class="headerlink" title="属性列查询"></a>属性列查询</h4><p>单表查询<br>*表示全部属性<br>空格指定别名</p>
+<h4 id="元组查询"><a href="#元组查询" class="headerlink" title="元组查询"></a>元组查询</h4><p>distinct 消除重复的行 select distinct sno from </p>
+<ul>
+<li>where 子句谓词<br>比较(&lt;,=,&gt;)<br>范围(between and )<br>确定集合(in)<br>字符匹配(like)<br>空值(null)<br>多重条件(and)，and优先级高于or<br>%：匹配任意长度的字符串，<br>_：匹配单个字符</li>
+<li>空值查询<br>is null</li>
+<li>排序<br>order by &lt;列&gt; asc|desc(升序|降序)</li>
+</ul>
+<h4 id="多关系查询，集合操作"><a href="#多关系查询，集合操作" class="headerlink" title="多关系查询，集合操作"></a>多关系查询，集合操作</h4><p>union，intersect，except  并，交，差，前后列数相同</p>
+<h4 id="多关系查询，连接操作"><a href="#多关系查询，连接操作" class="headerlink" title="多关系查询，连接操作"></a>多关系查询，连接操作</h4><p>等值连接，自身连接，外连接，复合条件连接</p>
+<ul>
+<li><p>等值连接<br>where子句</p>
+</li>
+<li><p>自身连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select c1.cno c2.cpno from course c1,course c2 where c1.cpno=c2.cno</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外连接<br>与上面的一般连接不同，一般连接只有满足条件的元组才可以作为结果输出<br>外连接（左，右，全外连接）可以把舍弃的元组保留在结果关系中，其他属性上填空值<br>左连接列出左边关系所有元组，右连接列出右边关系所有元组，全则都列<br>举例：<br>A（）<br>B（）<br>内连接，既是A，又是B<br>左，是A，可以不是B<br>右，是B，可以不是A<br>全，可以不是A，可以不是B</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">students(name,dept)</span><br><span class="line">employee(name,salary)</span><br><span class="line">内连接：select name,dept,salary from students inner join employee on (students.name=employee.name)</span><br><span class="line">左外连接: select name,dept,salary from students left outer join employee on (students.name=employee.name)</span><br><span class="line">右外连接：right</span><br><span class="line">全外连接：full</span><br></pre></td></tr></table></figure>
+
+<h4 id="SQL嵌套查询"><a href="#SQL嵌套查询" class="headerlink" title="SQL嵌套查询"></a>SQL嵌套查询</h4><p>查询块 select-from-where<br>子查询中不能使用order by语句，order by只能对最终结果进行排序</p>
+<ul>
+<li><p>带有in的子查询<br>不相关的子查询从里到外</p>
+</li>
+<li><p>带有比较运算符的子查询</p>
+</li>
+<li><p>带有any和all的子查询（有时候查询的名字不唯一时）<br>某一个，所有<br>提高搜索效率的方法：（某一个比较改为最大值比较max()）<br>（所有比较改为最小值min()）</p>
+</li>
+<li><p>相关子查询<br>exists 子查询不返回数据，只返回True，False<br>相关子查询方法由外向里<br>exists的优点：相对于in来说，当表数据较大时，使用exists，in()会遍历表</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">select * from A where exists (select 1 from B where A.id=B.id);</span><br><span class="line">exists的工作原理：</span><br><span class="line">List resultSet=&#123;&#125;;</span><br><span class="line">Array A=(select * from A);</span><br><span class="line"></span><br><span class="line">for(int i=0;i&lt;A.length;i++) &#123;</span><br><span class="line">   if(exists(A[i].id) &#123;  //执行select 1 from B where B.id=A.id是否有记录返回</span><br><span class="line">       resultSet.add(A[i]);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">return resultSet;</span><br></pre></td></tr></table></figure>
+
+<p>通俗解释：将外查询表的每一行，代入内查询检验，非空可以输出，空值则舍弃</p>
+<h4 id="SQL分组聚集"><a href="#SQL分组聚集" class="headerlink" title="SQL分组聚集"></a>SQL分组聚集</h4><p>聚集操作 count(*) count(列名)sum(),avg(),max(),min()</p>
+<ul>
+<li>group by xxxx having 条件设置</li>
+</ul>
+<h4 id="基于派生表的查询"><a href="#基于派生表的查询" class="headerlink" title="基于派生表的查询"></a>基于派生表的查询</h4><p>子查询不仅可以出现在where语句中，还能出现在from子句中，子查询生成的临时派生表成为主查询的查询对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">求出每个学生超过他自己的课程平均分的课程号</span><br><span class="line">方法一：</span><br><span class="line">select sno,cno</span><br><span class="line">from sc x</span><br><span class="line">where grade &gt;(select avg(grade) from sc y where y.sno=x.sno)</span><br><span class="line">方法二：（派生表）</span><br><span class="line">select sno,cno</span><br><span class="line">from sc,(select sno,avg(grade)</span><br><span class="line">					from sc</span><br><span class="line">					group by sno</span><br><span class="line">					as avg_sc(avg_sno,avg_grade))////或者直接括号别名</span><br><span class="line">where sc.sno=avg_sc.avg_sno</span><br><span class="line">and sc.grade&gt;=avg_sc.avg_grade</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><p>数据插入，数据删除，数据修改</p>
+<ul>
+<li>数据插入<br>insert into &lt;表&gt; &lt;列名&gt;values(‘a’,’b’,’c’)<br>values 可以替换为select 语句</li>
+<li>数据删除<br>delete from &lt;表&gt; where</li>
+<li>数据修改<br>update &lt;表&gt; set &lt;字段&gt; where</li>
+</ul>
+<h3 id="SQL视图"><a href="#SQL视图" class="headerlink" title="SQL视图"></a>SQL视图</h3><p>属于外模式，视图是从一个或几个基本表导出的表</p>
+<ul>
+<li>基于关系建立视图<br>create view a  as select * from students where</li>
+<li>行列子集视图：从基本表导出，保留了码</li>
+<li>视图的属性或者全部指定或者全部不指定</li>
+<li>with check option 子句<br>进行update,insert,delete要保证更新、插入、删除的行满足视图定义的谓词条件<br>对于update，insert要保证操作过后，数据能被视图查询出来</li>
+<li>视图删除 drop view name</li>
+<li>视图的查询<br>对视图的查询不能直接进行转换</li>
+<li>视图的更新<br>由两个以上节本表导出的视图不允许更新<br>来自于字段表达式或常数的视图字段不允许进行insert和update操作，但允许delete操作<br>不允许更新聚集函数视图字段<br>不允许更新group by，distinct视图<br>嵌套查询内层额表也是导出该视图的基本表时，不允许更新<br>不允许更新视图上定义的视图也不允许更新</li>
+<li>视图的作用<br>简化用户的操作<br>视图使用户能以多种角度看待统一数据<br>视图可以对机密数据提供一定的安全保护<br>视图可以帮助更清晰的表达查询<br>视图对数据库的重构提供了一定程度的逻辑独立性</li>
+</ul>
+<h3 id="SQL的索引"><a href="#SQL的索引" class="headerlink" title="SQL的索引"></a>SQL的索引</h3><p>索引提高了select和where子句的速度，降低了update和insert语句的速度<br>位于内模式<br>提高查询效率<br>b+树索引，hash索引</p>
+<ul>
+<li>创建索引<br>create index 索引名称 on 关系表名<br>create unique index 唯一索引<br>create cluster index 聚族索引</li>
+<li>索引的删除<br>drop index 索引名</li>
+<li>索引的查询<br>select * from table indexed by index_name where</li>
+</ul>
+<h3 id="SQL数据库完整性"><a href="#SQL数据库完整性" class="headerlink" title="SQL数据库完整性"></a>SQL数据库完整性</h3><p>完整性是指数据的正确性和相容性（数据类型，数据唯一性，数据实际性），防止不合语义的数据进入</p>
+<ul>
+<li>定义功能<br>实体完整性约束（primary key）分为列级约束和表级约束<br>操作完整性约束 (foreign key  …   references)<br>用户定义完整性约束（not null列值非空，unique列值唯一，check列值是否满足一个布尔表达式）</li>
+<li>检查功能<br>立即执行的约束：在一条语句或事务执行后立即检查<br>延迟执行约束：延迟到整个事务执行结束后在执行检查<br>begin transaction … commit   定义事务</li>
+<li>控制机制<br>违反实体完整性规则和用户定义的完整性规则的操作（拒绝执行）<br>违反参照完整性的操作（拒绝执行or接受这个操作，同时执行一些附加的操作</li>
+</ul>
+<h4 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h4><ul>
+<li>外码是否接受空值</li>
+<li>违约反应<br>删除被参照关系的某一个元组<br>on delete cascade  级联删除—参照关系外码和被参照元组中删除主码对应的元组一起删除</li>
+</ul>
+<p>on delete no action  受限删除—参照关系中没有任何元组的外码和被删除的被参照关系的主码对应，才执行删除操作</p>
+<p>on delete set null  置空删除—参照关系中被删除元组的主码值相等的外码值置为空值</p>
+<p>修改与删除操作相同</p>
+<p>插入参照关系（被参照关系中不存在元组的主码值与插入对应） no  action<br>修改参照关系  no action</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">神樂</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://K2gura.github.io/2020/03/18/数据库 SQL/">https://K2gura.github.io/2020/03/18/数据库 SQL/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://K2gura.github.io">NOTALIVE</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SQL/">SQL    </a></div><div class="post_share"><div class="social-share" data-image="/img/sql/sql.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-buttom"><i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lozad post-qr-code__img" src="/img/wechat.jpg"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lozad post-qr-code__img" src="/img/alipay.jpg"><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2020/03/13/python爬虫(⑤)/"><img class="next_cover lozad" data-src="/img/python.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>Python爬虫笔记(⑤)</span></div></a></div></nav></div></div><footer></footer></body></html><footer class="footer-bg" style="background-image: url(/img/sql/top.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2020 By 神樂</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly"><span>Butterfly</span></a></div><div class="footer_custom_text">凡是过往，皆为序章。</div><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><section class="rightside" id="rightside"><i class="fa fa-book" id="readmode" title="阅读模式"> </i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换">繁</a><i class="fa fa-moon-o nightshift" id="nightshift" title="夜间模式"></i></section><div id="post_bottom"><div id="post_bottom_items"><a id="to_comment" href="#post-comment"><i class="scroll_to_comment fa fa-comments"></i></a><i class="fa fa-list" id="mobile_toc"></i><div id="toc_mobile"><div class="toc_mobile_headline">目录</div><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL语言"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">SQL语言</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL数据定义功能"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">SQL数据定义功能</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#模式"><span class="toc_mobile_items-number">2.1.</span> <span class="toc_mobile_items-text">模式</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#表"><span class="toc_mobile_items-number">2.2.</span> <span class="toc_mobile_items-text">表</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL查询"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">SQL查询</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#属性列查询"><span class="toc_mobile_items-number">3.1.</span> <span class="toc_mobile_items-text">属性列查询</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#元组查询"><span class="toc_mobile_items-number">3.2.</span> <span class="toc_mobile_items-text">元组查询</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#多关系查询，集合操作"><span class="toc_mobile_items-number">3.3.</span> <span class="toc_mobile_items-text">多关系查询，集合操作</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#多关系查询，连接操作"><span class="toc_mobile_items-number">3.4.</span> <span class="toc_mobile_items-text">多关系查询，连接操作</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#SQL嵌套查询"><span class="toc_mobile_items-number">3.5.</span> <span class="toc_mobile_items-text">SQL嵌套查询</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#SQL分组聚集"><span class="toc_mobile_items-number">3.6.</span> <span class="toc_mobile_items-text">SQL分组聚集</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#基于派生表的查询"><span class="toc_mobile_items-number">3.7.</span> <span class="toc_mobile_items-text">基于派生表的查询</span></a></li></ol></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#数据操作"><span class="toc_mobile_items-number">4.</span> <span class="toc_mobile_items-text">数据操作</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL视图"><span class="toc_mobile_items-number">5.</span> <span class="toc_mobile_items-text">SQL视图</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL的索引"><span class="toc_mobile_items-number">6.</span> <span class="toc_mobile_items-text">SQL的索引</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#SQL数据库完整性"><span class="toc_mobile_items-number">7.</span> <span class="toc_mobile_items-text">SQL数据库完整性</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#参照完整性"><span class="toc_mobile_items-number">7.1.</span> <span class="toc_mobile_items-text">参照完整性</span></a></li></ol></li></ol></div></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script async src="/js/search/local-search.js"></script><script src="/js/nightshift.js"></script><script src="/js/activate-power-mode.js"></script><script>POWERMODE.colorful = true; // make power mode colorful
+POWERMODE.shake = true; // turn off shake
+document.body.addEventListener('input', POWERMODE);
+</script><script src="/js/tw_cn.js"></script><script>translateInitilization()
+
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@1.2.2/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script>const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+observer.observe();</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></div></footer>
